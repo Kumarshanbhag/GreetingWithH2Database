@@ -1,6 +1,13 @@
 package com.greeting.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Greeting {
+    @Id
     public long id;
 
     public String name;
