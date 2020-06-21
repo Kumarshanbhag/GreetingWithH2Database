@@ -4,13 +4,9 @@ import com.greeting.model.Greeting;
 import com.greeting.model.User;
 import com.greeting.service.IGreetingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class GreetingController {
@@ -46,7 +42,23 @@ public class GreetingController {
     }
 
     @GetMapping ("/findgreetingbyid")
-    public Greeting getGreetingById(@RequestParam (value = "id")Long id) {
+    public Greeting getGreetingById(@RequestParam (value = "id") Long id) {
         return greetingService.findGreetingById(id);
+    }
+
+    @PutMapping ("/update/{id}")
+    public Greeting updateGreeting(@PathVariable Long id,
+                                   @RequestParam (value = "firstName") String fName,
+                                   @RequestParam (value = "lastName") String lName) {
+        User user = new User();
+        user.setFirstName(fName);
+        user.setLastName(lName);
+        return greetingService.updateGreetingsById(id, user);
+    }
+
+    @PutMapping ("/update")
+    public Greeting updateGreetingByBody(@RequestParam (value = "id") Long id,
+                                         @RequestBody User user) {
+        return greetingService.updateGreetingsById(id, user);
     }
 }
