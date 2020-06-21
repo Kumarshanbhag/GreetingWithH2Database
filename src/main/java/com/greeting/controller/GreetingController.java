@@ -17,27 +17,36 @@ public class GreetingController {
     @Autowired
     IGreetingService greetingService;
 
-    @GetMapping("/greeting")
-    public Greeting greeting(@RequestParam(value = "firstName") String fName,
-                             @RequestParam(value = "lastName") String lName) {
-        User user =new User();
+    @GetMapping ("/greeting")
+    public Greeting greeting(@RequestParam (value = "firstName") String fName,
+                             @RequestParam (value = "lastName") String lName) {
+        User user = new User();
         user.setFirstName(fName);
         user.setLastName(lName);
         return greetingService.addGreeting(user);
     }
 
-    @GetMapping("/greeting/{fName}")
+    @GetMapping ("/greeting/{fName}")
     public Greeting greetingUsingPath(@PathVariable String fName,
-                             @RequestParam(value = "lastName") String lName) {
-        User user =new User();
+                                      @RequestParam (value = "lastName") String lName) {
+        User user = new User();
         user.setFirstName(fName);
         user.setLastName(lName);
         return greetingService.addGreeting(user);
     }
 
-    @GetMapping("/findallgreeting")
+    @GetMapping ("/findallgreeting")
     public List<Greeting> getAllGreeting() {
         return greetingService.findAllGreetings();
+    }
 
+    @GetMapping ("/findgreetingbyid/{id}")
+    public Greeting getGreetingByIdUSingPath(@PathVariable Long id) {
+        return greetingService.findGreetingById(id);
+    }
+
+    @GetMapping ("/findgreetingbyid")
+    public Greeting getGreetingById(@RequestParam (value = "id")Long id) {
+        return greetingService.findGreetingById(id);
     }
 }
