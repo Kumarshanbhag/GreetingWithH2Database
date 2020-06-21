@@ -40,4 +40,11 @@ public class GreetingServiceImpl implements IGreetingService {
         greeting.setName("Hello " + user.getFirstName() + " " + user.getLastName());
         return greetingRepository.save(greeting);
     }
+
+    @Override
+    public Greeting deleteGreetingById(Long id) {
+        Greeting greeting = findGreetingById(id);
+        greetingRepository.delete(greeting);
+        return greeting;
+    }
 }
