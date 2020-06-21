@@ -6,6 +6,7 @@ import com.greeting.repository.IGreetingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
@@ -21,5 +22,10 @@ public class GreetingServiceImpl implements IGreetingService {
         String message = String.format(template, (user.getFirstName().isEmpty()) ?
                 "World" : user.getFirstName() + " " + user.getLastName());
         return greetingRepository.save(new Greeting(counter.incrementAndGet(), message));
+    }
+
+    @Override
+    public List<Greeting> findAllGreetings() {
+        return greetingRepository.findAll();
     }
 }

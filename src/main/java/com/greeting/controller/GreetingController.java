@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
@@ -32,5 +33,11 @@ public class GreetingController {
         user.setFirstName(fName);
         user.setLastName(lName);
         return greetingService.addGreeting(user);
+    }
+
+    @GetMapping("/findallgreeting")
+    public List<Greeting> getAllGreeting() {
+        return greetingService.findAllGreetings();
+
     }
 }
