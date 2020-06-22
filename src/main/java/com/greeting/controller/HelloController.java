@@ -1,33 +1,45 @@
 package com.greeting.controller;
 
+import com.greeting.model.HelloMessage;
 import com.greeting.model.User;
+import com.greeting.service.IHelloService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping ("/hello")
 public class HelloController {
+    User user = new User();
+
+    @Autowired
+    IHelloService helloService;
+
     @RequestMapping (value = {"", "/", "/home"})
-    public String sayHello() {
-        return "Hello World!!!";
+    public HelloMessage sayHello() {
+        return helloService.setMessage(user);
     }
 
     @RequestMapping (value = {"/query"}, method = RequestMethod.GET)
-    public String sayHello(@RequestParam (value = "name") String name) {
-        return "Hello " + name + " !!!";
+    public HelloMessage sayHello(@RequestParam (value = "name") String name) {
+        user.setFirstName(name);
+        return helloService.setMessage(user);
     }
 
     @GetMapping ("/param/{name}")
-    public String sayHelloPath(@PathVariable String name) {
-        return "Hello " + name + "!!!";
+    public HelloMessage sayHelloPath(@PathVariable String name) {
+        user.setFirstName(name);
+        return helloService.setMessage(user);
     }
 
     @PostMapping ("/post")
-    public String sayHello(@RequestBody User user) {
-        return "Hello " + user.getFirstName() + " " + user.getLastName() + " !!!";
+    public HelloMessage sayHello(@RequestBody User user) {
+        return helloService.setMessage(user);
     }
 
-    @PutMapping("/put/{firstName}")
-    public String sayHello(@PathVariable String firstName, @RequestParam(value = "lastName") String lastName) {
-        return "Hello " + firstName + " " + lastName + "!!!";
+    @PutMapping ("/put/{firstName}")
+    public HelloMessage sayHello(@PathVariable String firstName, @RequestParam (value = "lastName") String lastName) {
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        return helloService.setMessage(user);
     }
 }
